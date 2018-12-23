@@ -51,7 +51,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        //
+        return view('books.show',compact('book'));
     }
 
     /**
@@ -90,6 +90,8 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        Session::flash('message','Libro eliminado correctablente');
+        return redirect()->route('books.index');
     }
 }
