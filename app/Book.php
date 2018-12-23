@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Book extends Model
 {
-    protected $fillable = ['title','description'];//para que solo aparezcan esos campos
+    protected $fillable = ['title','descripcion'];//para que solo aparezcan esos campos
 }

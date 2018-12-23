@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class BookController extends Controller
 {
@@ -14,7 +15,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books=Book::all();
+        $books=Book:: orderBy('id','ASC')->paginate(3);//all() lista todo
         return view('books.index',compact('books'));
     }
 
@@ -25,7 +26,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        //
+        return view('books.create');
     }
 
     /**
@@ -36,7 +37,10 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate(['title'=>'required','descripcion'=>'required']);
+        Book::create($request->all());
+        Session::flash('message','Libro creado correctablente');
+        return redirect()->route('books.index');
     }
 
     /**
@@ -58,7 +62,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        //
+        return view('books.edit',compact('book'));
     }
 
     /**
@@ -70,7 +74,12 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
-        //
+        $request->validate(['title'=>'required','descripcion'=>'required']);
+
+        $book->update($request->all());
+
+        Session::flash('message','Libro actualizado correctablente');
+        return redirect()->route('books.index');
     }
 
     /**
